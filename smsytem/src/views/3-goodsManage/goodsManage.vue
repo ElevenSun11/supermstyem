@@ -114,17 +114,17 @@ export default {
         classname: "",
         keywords: ""
       },
-      tableData: [],
+      tableData: [],//
 
-      ruleForm: {
-        username: ""
+      ruleForm: {//
+        username: ""//
       },
       rules: {
         addclassify: [
-          { required: true, trigger: "blur", message: "请选择分类" }
+          { required: true, trigger: "blur", message: "请选择分类" }//
         ],
         barcode: [
-          { required: true, trigger: "blur", message: "请点击生成条形码" }
+          { required: true, trigger: "blur", message: "请点击生成条形码" }//
         ]
       }
     };
@@ -134,7 +134,7 @@ export default {
     // 自动发送请求 获取所有用户账号数据 （只要一进入这个组件 就自动发送请求）
     this.getGoodsListByPage();
   },
-  methods: {
+  methods: {//
     getGoodsListByPage(){
       //收集当前页码 和每页显示条数
       let pageSize = this.pageSize;
@@ -143,28 +143,28 @@ export default {
       //发送ajax请求 把分页数据发送给后端
       this.axios.get('http://127.0.0.1:3000/goodsmanage/goodslistbypage',{
         params:{
-          pageSize,
-          currentPage
+          pageSize,//
+          currentPage//
         }
       })
         .then(response => {
           //接收后端返回的数据总条数 total 和对应页码的数据 data
-          let {total,data} = response.data;
+          let {total,data} = response.data;//
           
           //赋值给对应的变量
-          this.total = total;
-          this.tableData = data;
+          this.total = total;//
+          this.tableData = data;//
 
           //如果当前页没有数据 且 排除第一页
           if(!data.length && this.currentPage !== 1) {
             //页码减去1
-            this.currentPage -= 1;
+            this.currentPage -= 1;//
             //再调用自己
-            this.getGoodsListByPage();
+            this.getGoodsListByPage();//
           }
         })
          .catch(err => {
-           console.log(err)
+           console.log(err)//
          })
     },
     // 每页显示条数改变 就会触发这个函数
@@ -184,17 +184,17 @@ export default {
 
 
     handleEdit(index, row) {
-      this.ruleForm2 = row;
-      this.centerDialogVisible = true;
+      this.ruleForm2 = row;//
+      this.centerDialogVisible = true;//
 
     },
     //删除商品函数
     handleDelete(id){
-      //确认框
-      this.$confirm("你确定要删除吗？","删除提示",{
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      //确认框//
+      this.$confirm("你确定要删除吗？","删除提示",{//
+        confirmButtonText: "确定",//..//
+        cancelButtonText: "取消",//
+        type: "warning"///
       })
         //如果确定 就执行then
         .then(() => {
