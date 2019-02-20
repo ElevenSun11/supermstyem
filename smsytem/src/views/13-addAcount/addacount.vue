@@ -40,6 +40,7 @@
    </div>
 </template>
 <script>
+import qs from 'qs';
 export default {
   data() {
     //验证密码的函数
@@ -102,13 +103,35 @@ export default {
             userGroup: this.addForm.userGroup
             
           };
-          alert("恭喜您!登录注册成功");
-          // 直接跳转到后端账户管理
-          this.$router.push("/accountManage");
+          
+           // 使用axios发送数据给后端
+          this.axios.post('http://127.0.0.1:3000/account/accountadd', qs.stringify(params))
+            .then(response => {
+              // 接收后端返回的错误码 和 提示信息
+              let { error_code,  reason } = response.data;
+
+              // 根据后端响应的数据判断
+              if (error_code === 0) {
+                // 弹出成功的提示
+                this.$message({
+                  type: 'success',
+                  message: reason
+                });
+
+                // 跳转到账号管理列表
+                this.$router.push('/accountmanage')
+              } else {
+                // 弹出失败的提示
+                this.$message.error(reason);
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
         } else {
           alert("很遗憾注册失败");
           return false;
-        }
+        };
       });
     }
   }

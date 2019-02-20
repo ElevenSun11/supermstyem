@@ -69,6 +69,7 @@ export default {};
 .el-menu {
   color: #fff;
   width: 100%;
+  height:100%;
   .el-submenu {
       width: 100%;
     .el-submenu__title {

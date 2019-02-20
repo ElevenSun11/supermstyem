@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import qs from 'qs';
 export default {
   data() {
     //验证密码的函数
@@ -87,9 +88,32 @@ export default {
             username: this.loginForm.username,
             password: this.loginForm.password
           };
-          alert("恭喜您!登录成功即将进入华联超市管理系统")
-          // 直接跳转到后端主页
-          this.$router.push("/");
+          alert("恭喜您!登录成功即将进入华联超市管理系统");
+          //发送请求 把参数发给后端（把账号和密码发给后端 验证是否存在这个账号）
+          this.axios.post('http://127.0.0.1:3000/login/checklogin',qs.stringify(params))
+          .then(response =>{
+            //接收后端返回的数据
+            let {error_code,reason,token} = response.data;
+            //判断
+            if(error_code===0){
+              //把token存入浏览器本地存储中
+              window.localStorage.setItem('token',token);
+              //弹成功提示
+              this.$message({
+                type:'success',
+                message:reason
+              })
+              //跳转到后端首页
+              this.$router.push('/')
+
+            }else{
+              //弹失败提示
+              this.$message.error(reason);
+            }
+          })
+          .catch(err =>{
+            console.log(err)
+          })
         } else {
           alert("很遗憾验证失败");
           return false;

@@ -67,6 +67,10 @@
    </div>
 </template>
 <script>
+//引入moment模块
+import moment from 'moment';
+//引入qs模块
+import qs from 'qs';
 export default {
   data() {
     return {
